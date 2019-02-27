@@ -1,0 +1,41 @@
+from selenium import webdriver
+import selenium.webdriver.chrome.service as service
+from selenium.webdriver.support.ui import Select
+import time
+
+
+service = service.Service('C:\Python27\chromedriver.exe')
+#Service String depends on location of chromedriver 
+service.start()
+capabilities = {'chrome.binary': 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'}
+#string depends on location of chrome in files 
+driver = webdriver.Remote(service.service_url, capabilities)
+driver.get("https://www.eventbrite.com/myevents/")
+driver.find_element_by_name("email").send_keys("info@forum.berkeley.edu")
+button1 = driver.find_element_by_xpath(
+    '//*[@id="root"]/div/div[2]/div/div/div/div[1]/div/main/div/div/div/div[2]/form/div[2]/button'
+)
+button1.click()
+time.sleep(20)
+#time is for the user to enter password and hit enter (only takes about 5, but margin )
+past = driver.find_element_by_xpath('/html/body/div[4]/div/div[1]/div[1]/div[1]/div[3]/section/div/ul/li[3]/a')
+past.click()
+x = driver.find_element_by_xpath('/html/body/div[4]/div/div[1]/div[2]/div[1]/div[2]/div[1]/div/div/div[1]/h3/a/span[1]')
+x.click()
+analytics = driver.find_element_by_xpath(
+    '//*[@id="manage-content"]/section[4]/div/ul/li[1]/a'
+)
+analytics.click()
+events = driver.find_element_by_xpath(
+'//*[@id="event-select-dropdown"]/div[2]/a'
+)
+events.click()
+time.sleep(2)
+#helps to load the page to prevent error
+all = driver.find_element_by_xpath('//*[@id="event-select-dropdown"]/div[2]/div[1]/div[1]/span[1]/a[1]')
+all.click()
+download = driver.find_element_by_xpath('//*[@id="report_form"]/div[4]/div/div[2]/a[1]')
+download.click()
+
+driver.close()
+#File is located wherever download is set to be 
